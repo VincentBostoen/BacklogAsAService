@@ -1,0 +1,72 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	
+	<ui:style>
+		.form-row{
+			display:table-row;
+		}
+		
+		.form-field{
+			display:table-cell;
+			padding-right: 5px;
+		}
+		
+		.button-container {
+			float:right;
+			padding-top: 20px;
+		}
+		
+		.form-textbox {
+			width: 300px;
+		}
+		
+		.form-textarea {
+			width: 600px;
+			height: 350px;
+		}
+		
+		.form-number-textbox {
+			width: 30px;
+		}
+		
+		.description-label {
+			vertical-align: top;
+		}
+	</ui:style>
+	
+	<g:HTMLPanel>
+		<g:FlowPanel styleName='{style.form-row}'>
+			<g:Label addStyleNames='{style.form-field}'>Nom de la story :</g:Label>
+			<g:TextBox ui:field="storyName" addStyleNames='{style.form-field} {style.form-textbox}'></g:TextBox>
+		</g:FlowPanel>
+		
+		<g:FlowPanel styleName='{style.form-row}'>	
+			<g:Label addStyleNames='{style.form-field}'>Module :</g:Label>
+			<g:TextBox ui:field="moduleName" addStyleNames='{style.form-field} {style.form-textbox}'></g:TextBox>
+		</g:FlowPanel>
+		
+		<g:FlowPanel styleName='{style.form-row}'>
+			<g:Label addStyleNames='{style.form-field} {style.description-label}'>Description :</g:Label>
+			<g:TextArea ui:field="description" addStyleNames='{style.form-field} {style.form-textarea}'></g:TextArea>
+		</g:FlowPanel>
+		
+		<g:FlowPanel styleName='{style.form-row}'>
+			<g:Label addStyleNames='{style.form-field}'>Complexité :</g:Label>
+			<g:ListBox ui:field="complexityList" addStyleNames='{style.form-field}'></g:ListBox>
+		</g:FlowPanel>
+			
+		<g:FlowPanel styleName='{style.form-row}'>
+			<g:Label addStyleNames='{style.form-field}'>Valeur métier</g:Label>
+			<g:TextBox ui:field="businessValue" addStyleNames='{style.form-field} {style.form-number-textbox}'></g:TextBox>
+		</g:FlowPanel>
+		
+		<g:HTMLPanel styleName='{style.form-row}'>
+			<div style="display: table-cell;"></div>
+			<g:FlowPanel styleName='{style.button-container}'>
+				<g:Button ui:field="cancelButton">Annuler</g:Button>
+				<g:Button ui:field="confirmButton">Valider</g:Button>
+			</g:FlowPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
