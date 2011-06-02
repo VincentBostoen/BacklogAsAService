@@ -13,19 +13,19 @@
 	<properties>
 		<downloadSources>true</downloadSources>
 
-		<gwt.version>2.2.0</gwt.version>
+		<gwt.version>2.3.0</gwt.version>
 		<gwt.output.directory>${basedir}/target/baas</gwt.output.directory>
 		<gwt.style>DETAILED</gwt.style>
 
 		<gwt.module.alias>baas</gwt.module.alias>
-		
+
 		<gwt-gae-channel.version>0.4-alpha</gwt-gae-channel.version>
 
 		<gae.version>1.5.0.1</gae.version>
 		<gae.application.version>${project.version}</gae.application.version>
 		<gae.port>8080</gae.port>
 
-		<guice.version>3.0-rc2</guice.version>
+		<guice.version>3.0</guice.version>
 		<gwtplatform.version>0.5.1</gwtplatform.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -83,13 +83,13 @@
 			<id>objectify-appengine</id>
 			<url>http://objectify-appengine.googlecode.com/svn/maven</url>
 		</repository>
-		
+
 		<!-- Personnal repo for gwt-gae-channel -->
 		<repository>
 			<id>gwt-gae-channel</id>
 			<url>http://nicolasfrancois.googlecode.com/svn/repository</url>
-		</repository>		
-		
+		</repository>
+
 
 		<!-- Repo for guava gwt -->
 		<repository>
