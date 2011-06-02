@@ -5,7 +5,7 @@
 	version="2.5">
 
 	<listener>
-		<listener-class>com.perso.baas.server.guice.GuiceConfig</listener-class>
+		<listener-class>com.baas.server.guice.GuiceConfig</listener-class>
 	</listener>
 	<filter>
 		<filter-name>guiceFilter</filter-name>

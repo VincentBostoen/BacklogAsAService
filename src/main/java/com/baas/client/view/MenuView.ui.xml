@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:d="urn:import:com.google.gwt.dom.client">
+
+	<ui:with type="com.baas.client.place.PlaceTokens" field="placeTokens"></ui:with>
+
+	<g:HTMLPanel>
+		<div id="menu">
+			<ul>
+				<li><g:ListBox ui:field="backlogList"></g:ListBox></li>
+				<li><g:InlineHyperlink targetHistoryToken="{placeTokens.getHome}">Tableau de bord</g:InlineHyperlink></li>
+				<li><g:Anchor ui:field="listStoriesAnchor">Stories</g:Anchor></li>
+				<li><g:Anchor ui:field="scrumBoardAnchor">Scrum board</g:Anchor></li>
+				<li><g:Anchor ui:field="editBacklogAnchor">Modifier</g:Anchor></li>
+				<li><g:Anchor ui:field="deleteBacklogAnchor">Supprimer</g:Anchor></li>
+				<li><g:Anchor ui:field="newBacklogAnchor">Nouveau</g:Anchor></li>
+			</ul>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.1.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/2.1.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to='baas'>
+  
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+  <inherits name='org.fusesource.restygwt.RestyGWT'/>
+  <inherits name="com.googlecode.objectify.Objectify" />
+  <inherits name="com.flipthebird.GwtHashCodeEquals"/>
+  <inherits name='com.gwtplatform.mvp.Mvp' />
+  <inherits name="com.google.common.collect.Collect"/>
+  
+  <entry-point class='com.baas.client.Baas'/>
+
+  <source path='client'/>
+  <source path='shared'/>
+
+  <define-configuration-property name="gin.ginjector" is-multi-valued="false" />
+  <set-configuration-property name="gin.ginjector" value="com.baas.client.gin.BaasGinjector" />
+</module>

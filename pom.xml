@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.perso.baas</groupId>
+	<groupId>com.baas</groupId>
 	<artifactId>baas</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
@@ -18,9 +18,10 @@
 		<gwt.style>DETAILED</gwt.style>
 
 		<gwt.module.alias>baas</gwt.module.alias>
+		
+		<gwt-gae-channel.version>0.4-alpha</gwt-gae-channel.version>
 
-		<gae.version>1.3.7</gae.version>
-		<gaepluginversion>0.7.1</gaepluginversion>
+		<gae.version>1.5.0.1</gae.version>
 		<gae.application.version>${project.version}</gae.application.version>
 		<gae.port>8080</gae.port>
 
@@ -82,6 +83,13 @@
 			<id>objectify-appengine</id>
 			<url>http://objectify-appengine.googlecode.com/svn/maven</url>
 		</repository>
+		
+		<!-- Personnal repo for gwt-gae-channel -->
+		<repository>
+			<id>gwt-gae-channel</id>
+			<url>http://nicolasfrancois.googlecode.com/svn/repository</url>
+		</repository>		
+		
 
 		<!-- Repo for guava gwt -->
 		<repository>
@@ -108,6 +116,13 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>${gwt.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-gae-channel</artifactId>
+			<version>${gwt-gae-channel.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -232,7 +247,7 @@
 
 		<dependency>
 			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-tools-api</artifactId>
+			<artifactId>appengine-tools-sdk</artifactId>
 			<version>${gae.version}</version>
 		</dependency>
 
@@ -329,7 +344,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>r08</version>
+			<version>r09</version>
 		</dependency>
 
 		<dependency>
@@ -555,7 +570,7 @@
 					<port>${gae.port}</port>
 
 					<compileTargets>
-						<value>com.perso.baas.client</value>
+						<value>com.baas.client</value>
 					</compileTargets>
 
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>

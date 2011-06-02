@@ -1,0 +1,8 @@
+<module>
+  
+    <inherits name="com.baas.Baas"/>
+
+    <entry-point class="com.baas.NoOpEntryPoint" />
+    
+    
+</module>

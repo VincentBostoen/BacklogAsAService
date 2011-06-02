@@ -1,0 +1,44 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.tablerow {
+			display: table-row;
+			margin-bottom: 40px;
+			margin-top: 20px;
+		}
+		
+		.tablecell {
+			display: table-cell;
+			margin-right: 2px;
+		}
+		
+		.value-textbox {
+			padding-right: 20px;
+			padding-left: 3px;
+		}
+		
+				.form-row{
+			display:table-row;
+		}
+		
+		.button-container {
+			float:right;
+			padding-top: 20px;
+		}
+	</ui:style>
+	<g:FlowPanel>
+		<g:FlowPanel styleName='{style.tablerow}'>
+			<g:Label addStyleNames='{style.tablecell}'>Nom :</g:Label>
+			<g:TextBox addStyleNames='{style.tablecell} {style.value-textbox}'
+				ui:field="backlogName"></g:TextBox>
+		</g:FlowPanel>
+		<g:HTMLPanel styleName='{style.form-row}'>
+			<div style="display: table-cell;"></div>
+			<g:FlowPanel styleName='{style.button-container}'>
+				<g:Button ui:field="cancelButton">Annuler</g:Button>
+				<g:Button ui:field="confirmButton">Valider</g:Button>
+			</g:FlowPanel>
+		</g:HTMLPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 
