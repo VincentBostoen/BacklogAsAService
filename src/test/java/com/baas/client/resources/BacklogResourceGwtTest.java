@@ -9,7 +9,6 @@ import org.fusesource.restygwt.client.RestServiceProxy;
 import org.junit.Test;
 
 import com.baas.client.AbstractGWTTestCase;
-import com.baas.client.resources.BacklogsResource;
 import com.baas.shared.Backlog;
 import com.google.gwt.core.client.GWT;
 
