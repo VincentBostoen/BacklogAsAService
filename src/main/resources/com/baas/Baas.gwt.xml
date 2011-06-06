@@ -8,6 +8,7 @@
   <inherits name="com.googlecode.objectify.Objectify" />
   <inherits name="com.flipthebird.GwtHashCodeEquals"/>
   <inherits name='com.gwtplatform.mvp.Mvp' />
+  <inherits name='com.gwtplatform.dispatch.Dispatch' />
   <inherits name="com.google.common.collect.Collect"/>
   
   <entry-point class='com.baas.client.Baas'/>

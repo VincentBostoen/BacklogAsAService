@@ -2,11 +2,6 @@ package com.baas.client.presenter;
 
 import java.util.List;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-import org.fusesource.restygwt.client.Resource;
-import org.fusesource.restygwt.client.RestServiceProxy;
-
 import com.baas.client.place.PlaceTokens;
 import com.baas.client.presenter.event.RevealMenuEvent;
 import com.baas.client.presenter.event.RevealMenuHandler;
@@ -14,20 +9,22 @@ import com.baas.client.presenter.event.backlog.BacklogUpdatedEvent;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedHandler;
 import com.baas.client.presenter.event.backlogs.BacklogsListUpdatedEvent;
 import com.baas.client.presenter.event.backlogs.BacklogsListUpdatedHandler;
-import com.baas.client.resources.BacklogsResource;
 import com.baas.shared.Backlog;
+import com.baas.shared.GetBacklogListAction;
+import com.baas.shared.GetBacklogListResult;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.inject.Inject;
+import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
@@ -55,19 +52,16 @@ public class MenuPresenter extends
 	public interface MyProxy extends Proxy<MenuPresenter> {
 	}
 
-	private BacklogsResource backlogsService;
+	private final DispatchAsync dispatcher;
 	private PlaceManager placeManager;
 	private List<Backlog> backlogs;
 
 	@Inject
 	public MenuPresenter(EventBus eventBus, MyView view, MyProxy proxy,
-			PlaceManager placeManager) {
+			PlaceManager placeManager, final DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
 		this.placeManager = placeManager;
-		Resource resource = new Resource(GWT.getModuleBaseURL() + BacklogsResource.BACKLOGS_LIST);
-
-		this.backlogsService = GWT.create(BacklogsResource.class);
-		((RestServiceProxy) backlogsService).setResource(resource);
+		this.dispatcher = dispatcher;
 	}
 
 	@Override
@@ -79,16 +73,17 @@ public class MenuPresenter extends
 	@Override
 	protected void onBind() {
 		super.onBind();
-		backlogsService.get(new MethodCallback<List<Backlog>>() {
-			@Override
-			public void onFailure(Method method, Throwable exception) {
-			}
+		
+	    dispatcher.execute(new GetBacklogListAction(), new AsyncCallback<GetBacklogListResult>() {
+	              @Override
+	              public void onFailure(Throwable caught) {
+	              }
 
-			@Override
-			public void onSuccess(Method method, List<Backlog> backlogs) {
-				BacklogsListUpdatedEvent.fire(MenuPresenter.this, backlogs);
-			}
-		});
+	              @Override
+	              public void onSuccess(GetBacklogListResult result) {
+	            	  BacklogsListUpdatedEvent.fire(MenuPresenter.this, result.getBacklogs());
+	              }
+	            });
 		initHandlers();
 	}
 
