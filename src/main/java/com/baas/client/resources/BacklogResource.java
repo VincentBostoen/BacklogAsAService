@@ -21,7 +21,4 @@ public interface BacklogResource extends RestService {
 	@DELETE
 	@Path("/{id}")
 	public void delete(@PathParam("id") long backlogId, MethodCallback<Boolean> callback);
-
-	@POST
-	public void post(Backlog backlog, MethodCallback<Backlog> callback);
 }

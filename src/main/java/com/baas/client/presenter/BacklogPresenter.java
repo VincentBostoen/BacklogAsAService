@@ -13,6 +13,8 @@ import com.baas.client.presenter.event.backlog.BacklogUpdatedHandler;
 import com.baas.client.resources.BacklogResource;
 import com.baas.shared.GetBacklogAction;
 import com.baas.shared.GetBacklogResult;
+import com.baas.shared.UpdateBacklogAction;
+import com.baas.shared.UpdateBacklogResult;
 import com.baas.shared.core.Backlog;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -136,18 +138,7 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 			public void onClick(ClickEvent event) {
 				Backlog backlog = getView().getBacklog();
 
-				Resource resource = new Resource(GWT.getModuleBaseURL() + BacklogResource.BACKLOG_PATH + "/" + backlog.getKey());
-				((RestServiceProxy)BacklogPresenter.this.backlogService).setResource(resource);
-				backlogService.post(backlog, new MethodCallback<Backlog>() {
-					@Override
-					public void onFailure(Method method, Throwable exception) {
-					}
-
-					@Override
-					public void onSuccess(Method method, Backlog backlog) {
-						BacklogUpdatedEvent.fire(BacklogPresenter.this, backlog);
-					}
-				});
+				updateBacklog(backlog);
 			}
 		});
 	}
@@ -167,5 +158,18 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 	@Override
 	public void onBacklogUpdated(BacklogUpdatedEvent event) {
 		Window.alert("Le backlog " + event.getBacklog().getProjectName() + " a été mis à jour avec succès.");
+	}
+
+	private void updateBacklog(Backlog backlog) {
+		dispatcher.execute(new UpdateBacklogAction(backlog), new AsyncCallback<UpdateBacklogResult>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(UpdateBacklogResult result) {
+				BacklogUpdatedEvent.fire(BacklogPresenter.this, result.getBacklog());
+			}
+		});
 	}
 }
