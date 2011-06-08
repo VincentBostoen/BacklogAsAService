@@ -16,8 +16,10 @@
 
 package com.baas.server.guice;
 
-import com.baas.server.GetBacklogListHandler;
+import com.baas.server.dispatcher.GetBacklogListHandler;
+import com.baas.server.dispatcher.GetStoryListHandler;
 import com.baas.shared.GetBacklogListAction;
+import com.baas.shared.GetStoryListAction;
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
 
 /**
@@ -30,5 +32,6 @@ public class ServerModule extends HandlerModule {
   @Override
   protected void configureHandlers() {
     bindHandler(GetBacklogListAction.class, GetBacklogListHandler.class);
+    bindHandler(GetStoryListAction.class, GetStoryListHandler.class);
   }
 }

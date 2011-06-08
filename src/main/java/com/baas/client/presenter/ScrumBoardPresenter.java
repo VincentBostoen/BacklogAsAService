@@ -2,23 +2,14 @@ package com.baas.client.presenter;
 
 import java.util.List;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-import org.fusesource.restygwt.client.Resource;
-import org.fusesource.restygwt.client.RestServiceProxy;
-
 import com.baas.client.place.PlaceTokens;
-import com.baas.client.resources.BacklogResource;
-import com.baas.client.resources.UserStoriesResource;
+import com.baas.shared.GetStoryListAction;
+import com.baas.shared.GetStoryListResult;
 import com.baas.shared.UserStory;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SingleSelectionModel;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -40,16 +31,13 @@ public class ScrumBoardPresenter extends Presenter<ScrumBoardPresenter.MyView, S
 	}
 
 	private PlaceManager placeManager;
-	private UserStoriesResource userStoriesService;
+	private DispatchAsync dispatcher;
 	
 	@Inject
-	public ScrumBoardPresenter(EventBus eventBus, MyView view, MyProxy proxy, PlaceManager placeManager) {
+	public ScrumBoardPresenter(EventBus eventBus, MyView view, MyProxy proxy, PlaceManager placeManager, DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
 		this.placeManager = placeManager;
-		
-		Resource userStoriesResource = new Resource(GWT.getModuleBaseURL() + UserStoriesResource.STORIES_RESOURCE_PATH);
-		this.userStoriesService = GWT.create(UserStoriesResource.class);
-		((RestServiceProxy)userStoriesService).setResource(userStoriesResource);
+		this.dispatcher = dispatcher;
 	}
 	
 	@Override
@@ -60,14 +48,14 @@ public class ScrumBoardPresenter extends Presenter<ScrumBoardPresenter.MyView, S
 	}
 
 	private void getBacklog(long selectedBacklog) {
-		userStoriesService.list(selectedBacklog, new MethodCallback<List<UserStory>>() {
+		dispatcher.execute(new GetStoryListAction(selectedBacklog), new AsyncCallback<GetStoryListResult>() {
 			@Override
-			public void onFailure(Method method, Throwable exception) {
+			public void onFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(Method method, List<UserStory> stories) {
-				getView().setStories(stories);
+			public void onSuccess(GetStoryListResult result) {
+				getView().setStories(result.getStories());
 			}
 		});
 	}

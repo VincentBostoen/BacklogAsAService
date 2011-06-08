@@ -14,15 +14,14 @@
  * the License.
  */
 
-package com.baas.server;
+package com.baas.server.dispatcher;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.baas.server.dao.BacklogDao;
-import com.baas.shared.Backlog;
-import com.baas.shared.GetBacklogListAction;
-import com.baas.shared.GetBacklogListResult;
+import com.baas.server.dao.UserStoryDao;
+import com.baas.shared.GetStoryListAction;
+import com.baas.shared.GetStoryListResult;
+import com.baas.shared.UserStory;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -31,30 +30,30 @@ import com.gwtplatform.dispatch.shared.ActionException;
 /**
  * @author Philippe Beaudoin
  */
-public class GetBacklogListHandler implements
-    ActionHandler<GetBacklogListAction, GetBacklogListResult> {
+public class GetStoryListHandler implements
+    ActionHandler<GetStoryListAction, GetStoryListResult> {
 
-  private final BacklogDao backlogDao;
+  private final UserStoryDao userStoryDao;
 
   @Inject
-  public GetBacklogListHandler(BacklogDao backlogDao) {
-    this.backlogDao = backlogDao;
+  public GetStoryListHandler(UserStoryDao userStoryDao) {
+    this.userStoryDao = userStoryDao;
   }
 
   @Override
-  public GetBacklogListResult execute(final GetBacklogListAction action, final ExecutionContext context) throws ActionException {
-    List<Backlog> backlogs = backlogDao.list();
-    return new GetBacklogListResult(backlogs);
+  public GetStoryListResult execute(final GetStoryListAction action, final ExecutionContext context) throws ActionException {
+	List<UserStory> stories = userStoryDao.getStories(action.getBacklogId());
+    return new GetStoryListResult(stories);
   }
 
   @Override
-  public Class<GetBacklogListAction> getActionType() {
-    return GetBacklogListAction.class;
+  public Class<GetStoryListAction> getActionType() {
+    return GetStoryListAction.class;
   }
 
   @Override
-  public void undo(final GetBacklogListAction action,
-      final GetBacklogListResult result, final ExecutionContext context)
+  public void undo(final GetStoryListAction action,
+      final GetStoryListResult result, final ExecutionContext context)
       throws ActionException {
     // No undo
   }

@@ -58,7 +58,7 @@ public class MenuPresenter extends
 
 	@Inject
 	public MenuPresenter(EventBus eventBus, MyView view, MyProxy proxy,
-			PlaceManager placeManager, final DispatchAsync dispatcher) {
+			PlaceManager placeManager, DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
 		this.placeManager = placeManager;
 		this.dispatcher = dispatcher;
