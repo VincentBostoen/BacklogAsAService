@@ -16,10 +16,12 @@
 
 package com.baas.server.guice;
 
+import com.baas.server.dispatcher.GetBacklogHandler;
 import com.baas.server.dispatcher.GetBacklogListHandler;
 import com.baas.server.dispatcher.GetStoryHandler;
 import com.baas.server.dispatcher.GetStoryListHandler;
 import com.baas.server.dispatcher.UpdateStoryHandler;
+import com.baas.shared.GetBacklogAction;
 import com.baas.shared.GetBacklogListAction;
 import com.baas.shared.GetStoryAction;
 import com.baas.shared.GetStoryListAction;
@@ -39,5 +41,6 @@ public class ServerModule extends HandlerModule {
     bindHandler(GetStoryListAction.class, GetStoryListHandler.class);
     bindHandler(UpdateStoryAction.class, UpdateStoryHandler.class);
     bindHandler(GetStoryAction.class, GetStoryHandler.class);
+    bindHandler(GetBacklogAction.class, GetBacklogHandler.class);
   }
 }

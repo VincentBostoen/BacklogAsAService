@@ -11,14 +11,18 @@ import com.baas.client.presenter.event.backlog.BacklogDeletedHandler;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedEvent;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedHandler;
 import com.baas.client.resources.BacklogResource;
+import com.baas.shared.GetBacklogAction;
+import com.baas.shared.GetBacklogResult;
 import com.baas.shared.core.Backlog;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
+import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -46,11 +50,13 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 	private Resource backlogResource;
 	private BacklogResource backlogService;
 	private PlaceManager placeManager;
+	private DispatchAsync dispatcher;
 	
 	@Inject
-	public BacklogPresenter(EventBus eventBus, MyView view, MyProxy proxy, PlaceManager placeManager) {
+	public BacklogPresenter(EventBus eventBus, MyView view, MyProxy proxy, PlaceManager placeManager, DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
 		this.placeManager = placeManager;
+		this.dispatcher = dispatcher;
 		
 		backlogResource = new Resource(GWT.getModuleBaseURL() + BacklogResource.BACKLOG_PATH);
 		this.backlogService = GWT.create(BacklogResource.class);
@@ -103,15 +109,14 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 	}
 	
 	private void editBacklog(long selectedBacklog) {
-		((RestServiceProxy)backlogService).setResource(backlogResource);
-		backlogService.get(selectedBacklog, new MethodCallback<Backlog>(){
+		dispatcher.execute(new GetBacklogAction(selectedBacklog), new AsyncCallback<GetBacklogResult>() {
 			@Override
-			public void onFailure(Method method, Throwable exception) {
+			public void onFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(Method method, Backlog backlog) {
-				getView().setBacklog(backlog);
+			public void onSuccess(GetBacklogResult result) {
+				getView().setBacklog(result.getBacklog());
 			}
 		});
 	}

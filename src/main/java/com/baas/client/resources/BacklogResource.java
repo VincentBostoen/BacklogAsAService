@@ -18,10 +18,6 @@ public interface BacklogResource extends RestService {
 	 */
 	public static final String BACKLOG_PATH = "resources/backlog";
 
-	@GET
-	@Path("/{id}")
-	public void get(@PathParam("id") long backlogId, MethodCallback<Backlog> callback);
-	
 	@DELETE
 	@Path("/{id}")
 	public void delete(@PathParam("id") long backlogId, MethodCallback<Boolean> callback);

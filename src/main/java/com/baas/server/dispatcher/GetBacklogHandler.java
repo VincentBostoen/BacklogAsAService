@@ -16,13 +16,10 @@
 
 package com.baas.server.dispatcher;
 
-import java.util.List;
-
-import com.baas.server.dao.UserStoryDao;
-import com.baas.shared.GetStoryAction;
-import com.baas.shared.GetStoryListResult;
-import com.baas.shared.GetStoryResult;
-import com.baas.shared.core.UserStory;
+import com.baas.server.dao.BacklogDao;
+import com.baas.shared.GetBacklogAction;
+import com.baas.shared.GetBacklogResult;
+import com.baas.shared.core.Backlog;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
@@ -32,35 +29,35 @@ import com.gwtplatform.dispatch.shared.ActionException;
 /**
  * @author Philippe Beaudoin
  */
-public class GetStoryHandler implements
-    ActionHandler<GetStoryAction, GetStoryResult> {
+public class GetBacklogHandler implements
+    ActionHandler<GetBacklogAction, GetBacklogResult> {
 
-  private final UserStoryDao userStoryDao;
+  private final BacklogDao backlogDao;
 
   @Inject
-  public GetStoryHandler(UserStoryDao userStoryDao) {
-    this.userStoryDao = userStoryDao;
+  public GetBacklogHandler(BacklogDao backlogDao) {
+    this.backlogDao = backlogDao;
   }
 
   @Override
-  public GetStoryResult execute(final GetStoryAction action, final ExecutionContext context) throws ActionException {
-	UserStory storie;
+  public GetBacklogResult execute(final GetBacklogAction action, final ExecutionContext context) throws ActionException {
+	Backlog backlog;
 	try {
-		storie = userStoryDao.get(action.getStoryId());
+		backlog = backlogDao.get(action.getBacklogId());
 	} catch (EntityNotFoundException e) {
 		throw new ActionException(e);
 	}
-    return new GetStoryResult(storie);
+    return new GetBacklogResult(backlog);
   }
 
   @Override
-  public Class<GetStoryAction> getActionType() {
-    return GetStoryAction.class;
+  public Class<GetBacklogAction> getActionType() {
+    return GetBacklogAction.class;
   }
 
   @Override
-  public void undo(final GetStoryAction action,
-      final GetStoryResult result, final ExecutionContext context)
+  public void undo(final GetBacklogAction action,
+      final GetBacklogResult result, final ExecutionContext context)
       throws ActionException {
     // No undo
   }
