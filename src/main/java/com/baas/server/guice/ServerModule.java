@@ -17,9 +17,13 @@
 package com.baas.server.guice;
 
 import com.baas.server.dispatcher.GetBacklogListHandler;
+import com.baas.server.dispatcher.GetStoryHandler;
 import com.baas.server.dispatcher.GetStoryListHandler;
+import com.baas.server.dispatcher.UpdateStoryHandler;
 import com.baas.shared.GetBacklogListAction;
+import com.baas.shared.GetStoryAction;
 import com.baas.shared.GetStoryListAction;
+import com.baas.shared.UpdateStoryAction;
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
 
 /**
@@ -33,5 +37,7 @@ public class ServerModule extends HandlerModule {
   protected void configureHandlers() {
     bindHandler(GetBacklogListAction.class, GetBacklogListHandler.class);
     bindHandler(GetStoryListAction.class, GetStoryListHandler.class);
+    bindHandler(UpdateStoryAction.class, UpdateStoryHandler.class);
+    bindHandler(GetStoryAction.class, GetStoryHandler.class);
   }
 }

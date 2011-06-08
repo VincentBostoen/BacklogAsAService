@@ -1,20 +1,19 @@
 package com.baas.client.presenter;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-import org.fusesource.restygwt.client.Resource;
-import org.fusesource.restygwt.client.RestServiceProxy;
-
 import com.baas.client.place.PlaceTokens;
-import com.baas.client.resources.UserStoryResource;
+import com.baas.shared.GetStoryAction;
+import com.baas.shared.GetStoryResult;
+import com.baas.shared.UpdateStoryAction;
+import com.baas.shared.UpdateStoryResult;
 import com.baas.shared.UserStory;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
+import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -37,18 +36,15 @@ public class UserStoryPresenter extends Presenter<UserStoryPresenter.MyView, Use
 	@NameToken(PlaceTokens.STORY)
 	public interface MyProxy extends ProxyPlace<UserStoryPresenter>{}
 	
-	private UserStoryResource service;
 	private PlaceManager placeManager;
+	private DispatchAsync dispatcher;
 
 	@Inject
-	public UserStoryPresenter(EventBus eventBus, MyView view, MyProxy proxy, PlaceManager placeManager) {
+	public UserStoryPresenter(EventBus eventBus, MyView view, MyProxy proxy, PlaceManager placeManager, DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
 		
 		this.placeManager = placeManager;
-		
-		Resource resource = new Resource(GWT.getModuleBaseURL() + UserStoryResource.STORY_RESOURCE_PATH);
-		this.service = GWT.create(UserStoryResource.class);
-		((RestServiceProxy)this.service).setResource(resource);
+		this.dispatcher = dispatcher;
 	}
 
 	@Override
@@ -70,20 +66,8 @@ public class UserStoryPresenter extends Presenter<UserStoryPresenter.MyView, Use
 			@Override
 			public void onClick(ClickEvent event) {
 				UserStory story = getView().getStory();
-
-				Resource resource = new Resource(GWT.getModuleBaseURL() + UserStoryResource.STORY_RESOURCE_PATH + "/" + story.getId());
-				((RestServiceProxy)UserStoryPresenter.this.service).setResource(resource);
-				service.post(story, new MethodCallback<UserStory>() {
-					@Override
-					public void onFailure(Method method, Throwable exception) {
-					}
-
-					@Override
-					public void onSuccess(Method method, UserStory story) {
-						placeManager.revealRelativePlace(-1);
-						Window.alert("La story " + story.getName() + " a √©t√© mise √† jour avec succ√®s.");
-					}
-				});
+				
+				updateStory(story);
 			}
 		});
 	}
@@ -96,7 +80,7 @@ public class UserStoryPresenter extends Presenter<UserStoryPresenter.MyView, Use
 		
 		String action = request.getParameter(PlaceTokens.ACTION_PARAM_KEY, PlaceTokens.LIST_STORIES_ACTION_PARAM_KEY);
 		if(action.equals(PlaceTokens.EDIT_ACTION_PARAM_KEY) && selectedStory != null){
-			editStory(selectedStory);
+			editStory(Long.parseLong(selectedStory));
 		}else if(action.equals(PlaceTokens.NEW_ACTION_PARAM_KEY)){
 			newStory(selectedBacklogId);
 		}
@@ -113,17 +97,29 @@ public class UserStoryPresenter extends Presenter<UserStoryPresenter.MyView, Use
 		getView().setStory(userStory);
 	}
 
-	private void editStory(String selectedStory) {
-		Resource resource = new Resource(GWT.getModuleBaseURL() + UserStoryResource.STORY_RESOURCE_PATH);
-		((RestServiceProxy)UserStoryPresenter.this.service).setResource(resource);
-		this.service.get(selectedStory, new MethodCallback<UserStory>() {
+	private void editStory(long selectedStory) {
+		dispatcher.execute(new GetStoryAction(selectedStory), new AsyncCallback<GetStoryResult>() {
 			@Override
-			public void onFailure(Method method, Throwable exception) {
+			public void onFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(Method method, UserStory story) {
-				getView().setStory(story);
+			public void onSuccess(GetStoryResult result) {
+				getView().setStory(result.getStory());
+			}
+		});
+	}
+	
+	private void updateStory(UserStory story) {
+		dispatcher.execute(new UpdateStoryAction(story), new AsyncCallback<UpdateStoryResult>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(UpdateStoryResult result) {
+				placeManager.revealRelativePlace(-1);
+				Window.alert("La story " + result.getStory().getName() + " a été mise jour avec succès.");
 			}
 		});
 	}
