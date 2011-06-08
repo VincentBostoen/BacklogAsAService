@@ -19,7 +19,7 @@ package com.baas.server.dispatcher;
 import com.baas.server.dao.UserStoryDao;
 import com.baas.shared.UpdateStoryAction;
 import com.baas.shared.UpdateStoryResult;
-import com.baas.shared.UserStory;
+import com.baas.shared.core.UserStory;
 import com.google.inject.Inject;
 import com.googlecode.objectify.Key;
 import com.gwtplatform.dispatch.server.ExecutionContext;

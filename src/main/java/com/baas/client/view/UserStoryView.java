@@ -1,8 +1,8 @@
 package com.baas.client.view;
 
 import com.baas.client.presenter.UserStoryPresenter;
-import com.baas.shared.Complexity;
-import com.baas.shared.UserStory;
+import com.baas.shared.core.Complexity;
+import com.baas.shared.core.UserStory;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;

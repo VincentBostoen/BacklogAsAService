@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.baas.server.dao.UserStoryDao;
-import com.baas.shared.UserStory;
+import com.baas.shared.core.UserStory;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlecode.objectify.Key;

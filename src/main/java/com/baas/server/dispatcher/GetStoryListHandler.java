@@ -21,7 +21,7 @@ import java.util.List;
 import com.baas.server.dao.UserStoryDao;
 import com.baas.shared.GetStoryListAction;
 import com.baas.shared.GetStoryListResult;
-import com.baas.shared.UserStory;
+import com.baas.shared.core.UserStory;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;

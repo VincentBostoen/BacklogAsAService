@@ -12,7 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 import com.baas.server.dao.ObjectifyGenericDao;
-import com.baas.shared.BaasPojo;
+import com.baas.shared.core.BaasPojo;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.inject.Inject;
 import com.googlecode.objectify.Key;

@@ -2,7 +2,7 @@ package com.baas.server.dao;
 
 import java.util.List;
 
-import com.baas.shared.UserStory;
+import com.baas.shared.core.UserStory;
 import com.google.inject.Singleton;
 
 @Singleton

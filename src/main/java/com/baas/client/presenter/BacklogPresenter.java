@@ -11,7 +11,7 @@ import com.baas.client.presenter.event.backlog.BacklogDeletedHandler;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedEvent;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedHandler;
 import com.baas.client.resources.BacklogResource;
-import com.baas.shared.Backlog;
+import com.baas.shared.core.Backlog;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

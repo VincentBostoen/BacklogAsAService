@@ -1,4 +1,4 @@
-package com.baas.shared;
+package com.baas.shared.core;
 
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;

@@ -7,9 +7,9 @@ import javax.ws.rs.core.MediaType;
 
 import com.baas.server.dao.BacklogDao;
 import com.baas.server.dao.UserStoryDao;
-import com.baas.shared.Backlog;
-import com.baas.shared.Complexity;
-import com.baas.shared.UserStory;
+import com.baas.shared.core.Backlog;
+import com.baas.shared.core.Complexity;
+import com.baas.shared.core.UserStory;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlecode.objectify.Key;

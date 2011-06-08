@@ -9,7 +9,7 @@ import com.baas.client.place.PlaceTokens;
 import com.baas.client.resources.BacklogResource;
 import com.baas.shared.GetStoryListAction;
 import com.baas.shared.GetStoryListResult;
-import com.baas.shared.UserStory;
+import com.baas.shared.core.UserStory;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

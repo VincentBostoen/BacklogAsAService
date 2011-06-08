@@ -18,7 +18,7 @@ import com.baas.server.dao.UserStoryDao;
 import com.baas.server.resources.JAXBContextResolver;
 import com.baas.server.resources.ResourcePaths;
 import com.baas.server.resources.UserStoryResourceImpl;
-import com.baas.shared.UserStory;
+import com.baas.shared.core.UserStory;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.inject.Guice;
 import com.google.inject.Injector;

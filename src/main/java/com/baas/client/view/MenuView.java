@@ -3,7 +3,7 @@ package com.baas.client.view;
 import java.util.List;
 
 import com.baas.client.presenter.MenuPresenter;
-import com.baas.shared.Backlog;
+import com.baas.shared.core.Backlog;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;

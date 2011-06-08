@@ -22,7 +22,7 @@ import com.baas.server.dao.UserStoryDao;
 import com.baas.shared.GetStoryAction;
 import com.baas.shared.GetStoryListResult;
 import com.baas.shared.GetStoryResult;
-import com.baas.shared.UserStory;
+import com.baas.shared.core.UserStory;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;

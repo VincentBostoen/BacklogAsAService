@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.baas.server.dao.BacklogDao;
-import com.baas.shared.Backlog;
 import com.baas.shared.GetBacklogListAction;
 import com.baas.shared.GetBacklogListResult;
+import com.baas.shared.core.Backlog;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;

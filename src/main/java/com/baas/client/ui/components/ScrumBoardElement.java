@@ -1,6 +1,6 @@
 package com.baas.client.ui.components;
 
-import com.baas.shared.UserStory;
+import com.baas.shared.core.UserStory;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;

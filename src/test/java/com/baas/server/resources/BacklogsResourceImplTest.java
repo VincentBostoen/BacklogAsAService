@@ -17,7 +17,7 @@ import com.baas.server.dao.BacklogDao;
 import com.baas.server.guice.GuiceConfig;
 import com.baas.server.resources.BacklogsResourceImpl;
 import com.baas.server.resources.ResourcePaths;
-import com.baas.shared.Backlog;
+import com.baas.shared.core.Backlog;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceFilter;

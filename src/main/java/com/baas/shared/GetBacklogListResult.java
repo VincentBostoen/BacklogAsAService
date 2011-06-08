@@ -2,6 +2,7 @@ package com.baas.shared;
 
 import java.util.List;
 
+import com.baas.shared.core.Backlog;
 import com.gwtplatform.dispatch.shared.Result;
 
 public class GetBacklogListResult implements Result { 

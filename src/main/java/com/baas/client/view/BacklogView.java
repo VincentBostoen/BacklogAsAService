@@ -1,7 +1,7 @@
 package com.baas.client.view;
 
 import com.baas.client.presenter.BacklogPresenter;
-import com.baas.shared.Backlog;
+import com.baas.shared.core.Backlog;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;

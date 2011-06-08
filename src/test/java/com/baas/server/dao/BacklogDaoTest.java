@@ -8,7 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 
 import com.baas.server.dao.BacklogDao;
-import com.baas.shared.Backlog;
+import com.baas.shared.core.Backlog;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;

@@ -5,7 +5,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.baas.server.dao.BacklogDao;
-import com.baas.shared.Backlog;
+import com.baas.shared.core.Backlog;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlecode.objectify.Key;

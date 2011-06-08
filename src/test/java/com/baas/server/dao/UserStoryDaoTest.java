@@ -9,8 +9,8 @@ import org.junit.Before;
 
 import com.baas.PojoHelper;
 import com.baas.server.dao.UserStoryDao;
-import com.baas.shared.Backlog;
-import com.baas.shared.UserStory;
+import com.baas.shared.core.Backlog;
+import com.baas.shared.core.UserStory;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.googlecode.objectify.Key;

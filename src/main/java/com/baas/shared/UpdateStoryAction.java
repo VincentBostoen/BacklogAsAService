@@ -1,5 +1,6 @@
 package com.baas.shared;
 
+import com.baas.shared.core.UserStory;
 import com.gwtplatform.dispatch.shared.Action;
 
 public class UpdateStoryAction implements Action<UpdateStoryResult> {

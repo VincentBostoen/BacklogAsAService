@@ -5,7 +5,7 @@ import java.util.List;
 import com.baas.client.place.PlaceTokens;
 import com.baas.shared.GetStoryListAction;
 import com.baas.shared.GetStoryListResult;
-import com.baas.shared.UserStory;
+import com.baas.shared.core.UserStory;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;

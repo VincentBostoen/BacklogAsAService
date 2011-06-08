@@ -11,8 +11,8 @@ import java.util.Map;
 import javax.persistence.Embedded;
 import javax.persistence.Transient;
 
-import com.baas.shared.Backlog;
-import com.baas.shared.UserStory;
+import com.baas.shared.core.Backlog;
+import com.baas.shared.core.UserStory;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;

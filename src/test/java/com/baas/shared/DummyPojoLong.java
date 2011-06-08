@@ -2,7 +2,7 @@ package com.baas.shared;
 
 import javax.persistence.Id;
 
-import com.baas.shared.BaasPojo;
+import com.baas.shared.core.BaasPojo;
 
 public class DummyPojoLong implements BaasPojo<Long>{
 	

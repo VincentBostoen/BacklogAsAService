@@ -5,7 +5,7 @@ import com.baas.shared.GetStoryAction;
 import com.baas.shared.GetStoryResult;
 import com.baas.shared.UpdateStoryAction;
 import com.baas.shared.UpdateStoryResult;
-import com.baas.shared.UserStory;
+import com.baas.shared.core.UserStory;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
