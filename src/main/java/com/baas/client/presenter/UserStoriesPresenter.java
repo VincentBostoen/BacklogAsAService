@@ -2,15 +2,10 @@ package com.baas.client.presenter;
 
 import java.util.List;
 
-import org.fusesource.restygwt.client.Resource;
-import org.fusesource.restygwt.client.RestServiceProxy;
-
 import com.baas.client.place.PlaceTokens;
-import com.baas.client.resources.BacklogResource;
 import com.baas.shared.GetStoryListAction;
 import com.baas.shared.GetStoryListResult;
 import com.baas.shared.core.UserStory;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -44,7 +39,6 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 	public interface MyProxy extends ProxyPlace<UserStoriesPresenter> {
 	}
 
-	private BacklogResource backlogService;
 	private PlaceManager placeManager;
 	private DispatchAsync dispatcher;
 	
@@ -53,10 +47,6 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 		super(eventBus, view, proxy);
 		this.placeManager = placeManager;
 		this.dispatcher = dispatcher;
-		
-		Resource backlogResource = new Resource(GWT.getModuleBaseURL() + BacklogResource.BACKLOG_PATH);
-		this.backlogService = GWT.create(BacklogResource.class);
-		((RestServiceProxy)backlogService).setResource(backlogResource);
 	}
 
 	@Override

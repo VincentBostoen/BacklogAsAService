@@ -1,22 +1,17 @@
 package com.baas.client.presenter;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.Resource;
-import org.fusesource.restygwt.client.RestServiceProxy;
 
 import com.baas.client.place.PlaceTokens;
 import com.baas.client.presenter.event.backlog.BacklogDeletedEvent;
 import com.baas.client.presenter.event.backlog.BacklogDeletedHandler;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedEvent;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedHandler;
-import com.baas.client.resources.BacklogResource;
 import com.baas.shared.GetBacklogAction;
 import com.baas.shared.GetBacklogResult;
 import com.baas.shared.UpdateBacklogAction;
 import com.baas.shared.UpdateBacklogResult;
 import com.baas.shared.core.Backlog;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -50,7 +45,6 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 	}
 
 	private Resource backlogResource;
-	private BacklogResource backlogService;
 	private PlaceManager placeManager;
 	private DispatchAsync dispatcher;
 	
@@ -59,10 +53,6 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 		super(eventBus, view, proxy);
 		this.placeManager = placeManager;
 		this.dispatcher = dispatcher;
-		
-		backlogResource = new Resource(GWT.getModuleBaseURL() + BacklogResource.BACKLOG_PATH);
-		this.backlogService = GWT.create(BacklogResource.class);
-		((RestServiceProxy)backlogService).setResource(backlogResource);
 	}
 
 	@Override
@@ -97,17 +87,6 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 	}
 
 	private void deleteBacklog(final long selectedBacklog) {
-		backlogService.delete(selectedBacklog, new MethodCallback<Boolean>() {
-			@Override
-			public void onFailure(Method method, Throwable exception) {
-				
-			}
-
-			@Override
-			public void onSuccess(Method method, Boolean stories) {
-//				BacklogDeletedEvent.fire(this, selectedBacklog);
-			}
-		});
 	}
 	
 	private void editBacklog(long selectedBacklog) {
