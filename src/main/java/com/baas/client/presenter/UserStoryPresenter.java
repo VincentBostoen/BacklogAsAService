@@ -119,7 +119,7 @@ public class UserStoryPresenter extends Presenter<UserStoryPresenter.MyView, Use
 			@Override
 			public void onSuccess(UpdateStoryResult result) {
 				placeManager.revealRelativePlace(-1);
-				Window.alert("La story " + result.getStory().getName() + " a ŽtŽ mise jour avec succs.");
+				Window.alert("La story " + result.getStory().getName() + " a Ã©tÃ© mise jour avec succÃ¨s.");
 			}
 		});
 	}
