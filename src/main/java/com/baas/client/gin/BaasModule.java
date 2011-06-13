@@ -39,7 +39,7 @@ public class BaasModule extends AbstractPresenterModule {
 		bind(RootPresenter.class).asEagerSingleton();
 		bind(ProxyFailureHandler.class).to(DefaultProxyFailureHandler.class).in(Singleton.class);
 
-		//Contants
+		//Constants
 		bindConstant().annotatedWith(DefaultPlace.class).to(PlaceTokens.getHome());
 		
 		// Presenters

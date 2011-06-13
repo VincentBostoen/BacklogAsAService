@@ -2,7 +2,6 @@ package com.baas.client.presenter.event.backlogs;
 
 import java.util.List;
 
-import com.baas.client.presenter.event.backlog.BacklogUpdatedHandler;
 import com.baas.shared.core.Backlog;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;

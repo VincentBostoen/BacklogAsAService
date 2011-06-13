@@ -1,7 +1,5 @@
 package com.baas.client.presenter;
 
-import org.fusesource.restygwt.client.Resource;
-
 import com.baas.client.place.PlaceTokens;
 import com.baas.client.presenter.event.backlog.BacklogDeletedEvent;
 import com.baas.client.presenter.event.backlog.BacklogDeletedHandler;
@@ -44,7 +42,6 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 	public interface MyProxy extends ProxyPlace<BacklogPresenter> {
 	}
 
-	private Resource backlogResource;
 	private PlaceManager placeManager;
 	private DispatchAsync dispatcher;
 	
