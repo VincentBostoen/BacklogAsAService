@@ -102,6 +102,7 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 		dispatcher.execute(new GetBacklogAction(selectedBacklog), new AsyncCallback<GetBacklogResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
+				Window.alert(caught.getMessage());
 			}
 
 			@Override
@@ -152,6 +153,7 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 		dispatcher.execute(new UpdateBacklogAction(backlog), new AsyncCallback<UpdateBacklogResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
+				Window.alert(caught.getMessage());
 			}
 
 			@Override

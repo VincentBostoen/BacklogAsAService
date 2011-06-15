@@ -10,6 +10,7 @@ import static org.fest.assertions.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.List;
 
+import org.fest.assertions.AssertExtension;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +18,7 @@ import com.baas.PojoHelper;
 import com.baas.server.dao.BacklogDao;
 import com.baas.server.guice.DispatchServletModule;
 import com.baas.shared.core.Backlog;
+import com.baas.shared.core.BacklogAlreadyExistException;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -89,6 +91,46 @@ public class BacklogServiceTest{
 		Backlog backlog = new Backlog("New backlog");
 		Key<Backlog> backlogKey = new Key<Backlog>(Backlog.class, backlog.getProjectName());
 		
+		expect(backlogDaoMock.getByProperty("projectName", backlog.getProjectName())).andReturn(null);
+		expect(backlogDaoMock.put(backlog)).andReturn(backlogKey);
+		replay(backlogDaoMock);
+		
+		Backlog result = backlogService.put(backlog);
+
+		verify(backlogDaoMock);
+		
+		assertThat(result).isNotNull().isEqualTo(backlog);
+		assertThat(result.getKey()).isEqualTo(backlogKey.getId());
+	}
+	
+	@Test
+	public void testPutWithAlreadyExistingName(){
+		Backlog existingBacklog = new Backlog("An existing backlog");
+		existingBacklog.setId(1l);
+		
+		Backlog backlog = new Backlog("New backlog");
+		Key<Backlog> backlogKey = new Key<Backlog>(Backlog.class, backlog.getProjectName());
+		
+		expect(backlogDaoMock.getByProperty("projectName", backlog.getProjectName())).andReturn(existingBacklog);
+		replay(backlogDaoMock);
+		
+		try {
+			backlogService.put(backlog);
+			fail();
+		} catch (Exception e) {
+			assertThat(e).isInstanceOf(BacklogAlreadyExistException.class);
+		}
+
+		verify(backlogDaoMock);
+	}
+	
+	@Test
+	public void testPutAnExistingBacklog(){
+		Backlog backlog = new Backlog("New backlog");
+		backlog.setId(1l);
+		Key<Backlog> backlogKey = new Key<Backlog>(Backlog.class, backlog.getProjectName());
+		
+		expect(backlogDaoMock.getByProperty("projectName", backlog.getProjectName())).andReturn(backlog);
 		expect(backlogDaoMock.put(backlog)).andReturn(backlogKey);
 		replay(backlogDaoMock);
 		

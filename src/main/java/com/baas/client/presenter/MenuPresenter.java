@@ -93,8 +93,7 @@ public class MenuPresenter extends
 		getView().getDeleteBacklogAnchor().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				int selectedIndex = getView().getBacklogList()
-						.getSelectedIndex();
+				int selectedIndex = getView().getBacklogList().getSelectedIndex();
 				if (selectedIndex > 0) {
 					PlaceRequest myRequest = new PlaceRequest(PlaceTokens.BACKLOG);
 					myRequest = myRequest.with("backlogId", getView().getBacklogList().getValue(selectedIndex));
@@ -205,12 +204,16 @@ public class MenuPresenter extends
 		Backlog backlog = event.getBacklog();
 		List<Long> backlogIds = getBacklogIds();
 		int backlogIndex = getView().getBacklogList().getSelectedIndex();
+		if(backlogIndex < 1){
+			backlogIndex = 1;
+		}
 		//If it's an update
 		if(backlogIds.contains(backlog.getId())){
 			getView().getBacklogList().removeItem(backlogIndex);
 		}
-		getView().getBacklogList().insertItem(backlog.getProjectName(), null, backlog.getId().toString(), backlogIndex);
-		getView().getBacklogList().setSelectedIndex(backlogIndex);
+		
+		getView().getBacklogList().insertItem(backlog.getProjectName(), null, backlog.getId().toString(), 1);
+		getView().getBacklogList().setSelectedIndex(1);
 		
 		changePlaceFromSelectedBacklog(backlog.getId()+"");
 	}
