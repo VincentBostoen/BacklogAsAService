@@ -5,6 +5,8 @@ import java.util.List;
 import com.baas.client.place.PlaceTokens;
 import com.baas.client.presenter.event.RevealMenuEvent;
 import com.baas.client.presenter.event.RevealMenuHandler;
+import com.baas.client.presenter.event.backlog.BacklogDeletedEvent;
+import com.baas.client.presenter.event.backlog.BacklogDeletedHandler;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedEvent;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedHandler;
 import com.baas.client.presenter.event.backlogs.BacklogsListUpdatedEvent;
@@ -36,7 +38,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 public class MenuPresenter extends
 		Presenter<MenuPresenter.MyView, MenuPresenter.MyProxy> implements
-		RevealMenuHandler, BacklogUpdatedHandler, BacklogsListUpdatedHandler {
+		RevealMenuHandler, BacklogUpdatedHandler, BacklogsListUpdatedHandler, BacklogDeletedHandler {
 
 	public interface MyView extends View {
 		void setBacklogs(List<Backlog> backlogs);
@@ -209,6 +211,8 @@ public class MenuPresenter extends
 		}
 		getView().getBacklogList().insertItem(backlog.getProjectName(), null, backlog.getId().toString(), backlogIndex);
 		getView().getBacklogList().setSelectedIndex(backlogIndex);
+		
+		changePlaceFromSelectedBacklog(backlog.getId()+"");
 	}
 	
 	/**
@@ -218,5 +222,15 @@ public class MenuPresenter extends
 	@Override
 	public void onBacklogsListUpdated(BacklogsListUpdatedEvent event) {
 		setBacklogs(event.getBacklogs());
+	}
+
+	@ProxyEvent
+	@Override
+	public void onBacklogDeleted(BacklogDeletedEvent event) {
+		int backlogIndex = getView().getBacklogList().getSelectedIndex();
+		getView().getBacklogList().removeItem(backlogIndex);
+		getView().getBacklogList().setSelectedIndex(0);
+		PlaceRequest myRequest = new PlaceRequest(PlaceTokens.HOME);
+		placeManager.revealPlace(myRequest);
 	}
 }

@@ -5,6 +5,8 @@ import com.baas.client.presenter.event.backlog.BacklogDeletedEvent;
 import com.baas.client.presenter.event.backlog.BacklogDeletedHandler;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedEvent;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedHandler;
+import com.baas.shared.DeleteBacklogAction;
+import com.baas.shared.DeleteBacklogResult;
 import com.baas.shared.GetBacklogAction;
 import com.baas.shared.GetBacklogResult;
 import com.baas.shared.UpdateBacklogAction;
@@ -84,6 +86,16 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 	}
 
 	private void deleteBacklog(final long selectedBacklog) {
+		dispatcher.execute(new DeleteBacklogAction(selectedBacklog), new AsyncCallback<DeleteBacklogResult>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(DeleteBacklogResult result) {
+				BacklogDeletedEvent.fire(BacklogPresenter.this, selectedBacklog);
+			}
+		});
 	}
 	
 	private void editBacklog(long selectedBacklog) {
@@ -127,7 +139,7 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 	@ProxyEvent
 	@Override
 	public void onBacklogDeleted(BacklogDeletedEvent event) {
-		Window.alert("Le backlog " + event.getBacklog().getProjectName() + " à été supprimer avec succès.");
+		Window.alert("Le backlog a été supprimer avec succès.");
 	}
 
 	@ProxyEvent

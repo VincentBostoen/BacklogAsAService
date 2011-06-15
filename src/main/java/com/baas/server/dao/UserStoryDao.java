@@ -12,6 +12,11 @@ public class UserStoryDao extends ObjectifyGenericDao<UserStory> {
 		super(UserStory.class);
 	}
 	
+	/**
+	 * Get stories in datastore that are linked to the backlog corresponding to the backlogId
+	 * @param backlogId
+	 * @return
+	 */
 	public List<UserStory> getStories(long backlogId){
 		return listByProperty("backlogId", backlogId);
 	}

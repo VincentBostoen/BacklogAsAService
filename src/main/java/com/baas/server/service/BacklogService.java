@@ -25,13 +25,17 @@ public class BacklogService {
 		return backlogDao.list();
 	}
 
-	public void setBacklogDao(BacklogDao backlogDao) {
-		this.backlogDao = backlogDao;
-	}
-
 	public Backlog put(Backlog backlog) {
 		Key<Backlog> backlogKey = backlogDao.put(backlog);
 		backlog.setKey(backlogKey.getId());
 		return backlog;
+	}
+
+	public void delete(long backlogId) {
+		backlogDao.delete(backlogId);
+	}
+
+	public void setBacklogDao(BacklogDao backlogDao) {
+		this.backlogDao = backlogDao;
 	}
 }

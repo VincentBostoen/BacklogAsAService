@@ -12,14 +12,14 @@ public class BacklogDeletedEvent extends GwtEvent<BacklogDeletedHandler> {
 		return TYPE;
 	}
 
-	public static void fire(HasHandlers source, Backlog backlog) {
-		source.fireEvent(new BacklogDeletedEvent(backlog));
+	public static void fire(HasHandlers source, long backlogId) {
+		source.fireEvent(new BacklogDeletedEvent(backlogId));
 	}
 
-	private Backlog backlog;
+	private long backlogId;
 
-	public BacklogDeletedEvent(Backlog backlog) {
-		this.backlog = backlog;
+	public BacklogDeletedEvent(long backlogId) {
+		this.backlogId = backlogId;
 	}
 
 	@Override
@@ -32,11 +32,11 @@ public class BacklogDeletedEvent extends GwtEvent<BacklogDeletedHandler> {
 		return getType();
 	}
 
-	public void setBacklog(Backlog backlog) {
-		this.backlog = backlog;
+	public void setBacklogId(long backlogId) {
+		this.backlogId = backlogId;
 	}
 
-	public Backlog getBacklog() {
-		return backlog;
+	public long getBacklogId() {
+		return backlogId;
 	}
 }

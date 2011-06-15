@@ -16,12 +16,12 @@ public class UserStoryService {
 		this.userStoryDao = userStoryDao;
 	}
 
-	public UserStory retrieve(long backlogId) throws EntityNotFoundException {
-		return userStoryDao.get(backlogId);
+	public UserStory retrieve(long storyId) throws EntityNotFoundException {
+		return userStoryDao.get(storyId);
 	}
 
 	public List<UserStory> list(long backlogId) {
-		return userStoryDao.list();
+		return userStoryDao.getStories(backlogId);
 	}
 
 	public UserStory put(UserStory userStory) {

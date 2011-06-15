@@ -76,7 +76,7 @@ public class UserStoryServiceTest {
 		long backlogId = 1l;
 		List<UserStory> userStoriesMock = Arrays.asList(PojoHelper.userStory("A story"), PojoHelper.userStory("Another one"), PojoHelper.userStory("A third"));
 		
-		expect(userStoryDaoMock.list()).andReturn(userStoriesMock);
+		expect(userStoryDaoMock.getStories(backlogId)).andReturn(userStoriesMock);
 		replay(userStoryDaoMock);
 		
 		List<UserStory> result = userStoryService.list(backlogId);

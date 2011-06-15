@@ -100,18 +100,15 @@ public class BacklogServiceTest{
 		assertThat(result.getKey()).isEqualTo(backlogKey.getId());
 	}
 	
-//	@Test
-//	public void testDelete(){
-//		Backlog backlog = new Backlog("Nouveau backlog");
-//		
-//		expect(backlogDaoMock.delete(backlog)).and;
-//		replay(backlogDaoMock);
-//		
-//		Backlog result = backlogService.delete(backlog);
-//
-//		verify(backlogDaoMock);
-//		
-//		assertThat(result).isNotNull().isEqualTo(backlog);
-//		assertThat(result.getKey()).isEqualTo(backlogKey.getId());
-//	}
+	@Test
+	public void testDelete(){
+		long backlogId = 1l;
+		
+		expect(backlogDaoMock.delete(backlogId)).andReturn(true);
+		replay(backlogDaoMock);
+		
+		backlogService.delete(backlogId);
+
+		verify(backlogDaoMock);
+	}
 }
