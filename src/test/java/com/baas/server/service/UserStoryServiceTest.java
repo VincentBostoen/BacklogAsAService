@@ -102,18 +102,15 @@ public class UserStoryServiceTest {
 		assertThat(result.getKey()).isEqualTo(userStoryKey.getId());
 	}
 	
-//	@Test
-//	public void testDelete(){
-//		Backlog backlog = new Backlog("Nouveau backlog");
-//		
-//		expect(userStoryDaoMock.delete(backlog)).and;
-//		replay(userStoryDaoMock);
-//		
-//		Backlog result = userStoryService.delete(backlog);
-//
-//		verify(userStoryDaoMock);
-//		
-//		assertThat(result).isNotNull().isEqualTo(backlog);
-//		assertThat(result.getKey()).isEqualTo(backlogKey.getId());
-//	}
+	@Test
+	public void testDelete(){
+		long userStoryId = 1l;
+		
+		expect(userStoryDaoMock.delete(userStoryId)).andReturn(true);
+		replay(userStoryDaoMock);
+		
+		userStoryService.delete(userStoryId);
+
+		verify(userStoryDaoMock);
+	}
 }

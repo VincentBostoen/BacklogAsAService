@@ -103,7 +103,6 @@ public class ObjectifyGenericDaoTest {
 		
 		Assert.assertEquals(4, ofy.query(DummyPojoLong.class).list().size());
 		Assert.assertEquals(dummyPojo, gettedDummyPojo);
-
 	}
 
 	/**
@@ -121,7 +120,6 @@ public class ObjectifyGenericDaoTest {
 		}
 		
 		Assert.assertEquals(5, ofy.query(DummyPojoLong.class).list().size());
-		
 	}
 
 	/**

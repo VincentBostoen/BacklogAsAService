@@ -30,8 +30,8 @@ public class UserStoryService {
 		return userStory;
 	}
 	
-	public void delete(UserStory userStory) {
-		userStoryDao.delete(userStory);
+	public void delete(long userStoryId) {
+		userStoryDao.delete(userStoryId);
 	}
 	
 	public void setUserStoryDao(UserStoryDao backlogDao) {
