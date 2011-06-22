@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.flipthebird.gwthashcodeequals.EqualsBuilder;
 import com.flipthebird.gwthashcodeequals.HashCodeBuilder;
+import com.google.gwt.view.client.ProvidesKey;
 
 /**
  * A story is the the description a of user use case
@@ -15,6 +16,15 @@ import com.flipthebird.gwthashcodeequals.HashCodeBuilder;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class UserStory implements BaasPojo<Long> {
 
+	  /**
+     * The key provider that provides the unique ID of a contact.
+     */
+    public static final ProvidesKey<UserStory> KEY_PROVIDER = new ProvidesKey<UserStory>() {
+      public Object getKey(UserStory item) {
+        return item == null ? null : item.getId();
+      }
+    };
+    
 	/** Technical identifier */
 	@Id
 	private Long id;

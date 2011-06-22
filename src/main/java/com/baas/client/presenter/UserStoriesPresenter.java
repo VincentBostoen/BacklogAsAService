@@ -9,10 +9,11 @@ import com.baas.shared.core.UserStory;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SingleSelectionModel;
+import com.google.gwt.view.client.CellPreviewEvent;
+import com.google.gwt.view.client.SelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.client.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -29,9 +30,10 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 	public interface MyView extends View {
 		public void setBacklog(String selectedBacklog);
 		public void setStories(List<UserStory> stories);
-		public SingleSelectionModel<UserStory> getSelectionModel();
+		public SelectionModel<UserStory> getSelectionModel();
 		public Button getDeleteStoryButton();
 		public Button getNewStoryButton();
+		public CellTable<UserStory> getStoriesTable();
 	}
 
 	@ProxyCodeSplit
@@ -78,19 +80,20 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 	@Override
 	protected void onBind() {
 		super.onBind();
-		final SingleSelectionModel<UserStory> selectionModel = getView().getSelectionModel();
-		
-		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-					public void onSelectionChange(SelectionChangeEvent event) {
-						UserStory story = selectionModel.getSelectedObject();
-						if (story != null) {
-							PlaceRequest myRequest = new PlaceRequest(PlaceTokens.STORY);
-							myRequest = myRequest.with("storyId", story.getId() + "");
-							myRequest = myRequest.with(PlaceTokens.ACTION_PARAM_KEY, PlaceTokens.EDIT_ACTION_PARAM_KEY);
-							placeManager.revealRelativePlace(myRequest);
-						}
-					}
-				});
+		getView().getStoriesTable().addCellPreviewHandler(new CellPreviewEvent.Handler<UserStory>() {
+			@Override
+			public void onCellPreview(CellPreviewEvent<UserStory> event) {
+				if(event.getNativeEvent().getType().equals(ClickEvent.getType().getName()) && event.getContext().getColumn() != 0){
+					UserStory selectedStory = event.getValue();
+					if (selectedStory != null) {
+						PlaceRequest myRequest = new PlaceRequest(PlaceTokens.STORY);
+						myRequest = myRequest.with("storyId", selectedStory.getId() + "");
+						myRequest = myRequest.with(PlaceTokens.ACTION_PARAM_KEY, PlaceTokens.EDIT_ACTION_PARAM_KEY);
+						placeManager.revealRelativePlace(myRequest);
+				}
+			}
+		}});
+
 		getView().getNewStoryButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -99,16 +102,17 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 				placeManager.revealRelativePlace(myRequest);
 			}
 		});
+		
+		getView().getDeleteStoryButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				
+			}
+		});
 	}
 	
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		SingleSelectionModel<UserStory> selectionModel = getView().getSelectionModel();
-		UserStory selectedObject = selectionModel.getSelectedObject();
-		if(selectedObject != null){
-			selectionModel.setSelected(selectedObject, false);
-		}
 	}
-	
 }

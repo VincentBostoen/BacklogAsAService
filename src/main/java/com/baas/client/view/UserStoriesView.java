@@ -4,17 +4,25 @@ import java.util.List;
 
 import com.baas.client.presenter.UserStoriesPresenter;
 import com.baas.shared.core.UserStory;
+import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
+import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.view.client.SingleSelectionModel;
+import com.google.gwt.view.client.DefaultSelectionEventManager;
+import com.google.gwt.view.client.MultiSelectionModel;
+import com.google.gwt.view.client.SelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
@@ -48,21 +56,23 @@ public class UserStoriesView extends ViewImpl implements UserStoriesPresenter.My
 	Label nbStoriesTodo;
 	/** Widget that contains the table in which are displayed stories */
 	@UiField
-	FlowPanel tableContainer;
-	@UiField
 	Button deleteStoryButton;
 	@UiField
 	Button newStoryButton;
 	/** Table in which are displayed stories */
-	private CellTable<UserStory> storiesTable;
+	@UiField(provided = true)
+	CellTable<UserStory> storiesTable;
+	/** Table pager */
+	@UiField(provided = true)
+	SimplePager pager;
 	/** SelectionModel associated to the table */
-	private SingleSelectionModel<UserStory> selectionModel;
+	private SelectionModel<UserStory> selectionModel;
 
 
 	@Inject
 	public UserStoriesView() {
-		widget = uiBinder.createAndBindUi(this);
 		initTable();
+		widget = uiBinder.createAndBindUi(this);
 	}
 
 
@@ -71,7 +81,33 @@ public class UserStoriesView extends ViewImpl implements UserStoriesPresenter.My
 	 * parent container
 	 */
 	private void initTable() {
-		storiesTable = new CellTable<UserStory>();
+		storiesTable = new CellTable<UserStory>(UserStory.KEY_PROVIDER);
+		
+		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+	    pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
+	    pager.setDisplay(storiesTable);
+	    
+	    selectionModel = new MultiSelectionModel<UserStory>(UserStory.KEY_PROVIDER);
+	    storiesTable.setSelectionModel(selectionModel, DefaultSelectionEventManager.<UserStory> createCheckboxManager());
+	    storiesTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+	    storiesTable.setKeyboardPagingPolicy(KeyboardPagingPolicy.CHANGE_PAGE);
+	        
+		initColumns();
+	}
+
+
+	private void initColumns() {
+		final CheckboxCell selectionCell = new CheckboxCell(false, false);
+	    final Column<UserStory, Boolean> checkColumn = new Column<UserStory, Boolean>(selectionCell){
+	    	@Override
+		      public Boolean getValue(UserStory object) {
+		        return selectionModel.isSelected(object);
+		      }
+	    };
+		
+	    storiesTable.addColumn(checkColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
+	    storiesTable.setColumnWidth(checkColumn, 40, Unit.PX);
+	    
 		TextColumn<UserStory> sprintNumberColumn = new TextColumn<UserStory>() {
 			@Override
 			public String getValue(UserStory story) {
@@ -114,6 +150,7 @@ public class UserStoriesView extends ViewImpl implements UserStoriesPresenter.My
 				return story.getBusinessValue() + "";
 			}
 		};
+		
 		storiesTable.addColumn(sprintNumberColumn, "Itération");
 		storiesTable.addColumn(storyNumberColumn, "N° Story");
 		storiesTable.addColumn(nameColumn, "Intitulé");
@@ -121,14 +158,6 @@ public class UserStoriesView extends ViewImpl implements UserStoriesPresenter.My
 		storiesTable.addColumn(statusColumn, "Status");
 		storiesTable.addColumn(complexityColumn, "Complexité");
 		storiesTable.addColumn(businessValueColumn, "Valeur métier");
-
-		storiesTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-
-		// Add a selection model to handle user selection.
-		selectionModel = new SingleSelectionModel<UserStory>();
-		storiesTable.setSelectionModel(selectionModel);
-
-		tableContainer.add(storiesTable);
 	}
 
 	/**
@@ -160,7 +189,7 @@ public class UserStoriesView extends ViewImpl implements UserStoriesPresenter.My
 	}
 
 	@Override
-	public SingleSelectionModel<UserStory> getSelectionModel() {
+	public SelectionModel<UserStory> getSelectionModel() {
 		return selectionModel;
 	}
 	
@@ -172,7 +201,6 @@ public class UserStoriesView extends ViewImpl implements UserStoriesPresenter.My
 		backlogName.setText(selectedBacklog);
 	}
 
-
 	public Button getNewStoryButton() {
 		return newStoryButton;
 	}
@@ -180,5 +208,9 @@ public class UserStoriesView extends ViewImpl implements UserStoriesPresenter.My
 
 	public Button getDeleteStoryButton() {
 		return deleteStoryButton;
+	}
+
+	public CellTable<UserStory> getStoriesTable() {
+		return storiesTable;
 	}
 }

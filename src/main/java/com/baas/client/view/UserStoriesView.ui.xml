@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:c="urn:import:com.google.gwt.user.cellview.client">
 	<ui:style>
 		.tablerow {
 			display: table-row;
@@ -54,7 +55,9 @@
 			<g:Label addStyleNames='{style.tablecell}'>Restantes :</g:Label>
 			<g:Label addStyleNames='{style.tablecell} {style.value-label} {style.number}' ui:field="nbStoriesTodo"></g:Label>
 		</g:FlowPanel>
-		<g:FlowPanel styleName='{style.tablecontainer}' ui:field="tableContainer">	
+		<g:FlowPanel styleName='{style.tablecontainer}' ui:field="tableContainer">
+			<c:CellTable pageSize='15' ui:field='storiesTable' />
+			<c:SimplePager ui:field='pager' />
 		</g:FlowPanel>
 				<g:HTMLPanel styleName='{style.form-row}'>
 			<div style="display: table-cell;"></div>
