@@ -9,7 +9,9 @@ import static org.easymock.EasyMock.verify;
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -113,4 +115,29 @@ public class UserStoryServiceTest {
 
 		verify(userStoryDaoMock);
 	}
+	
+	@Test
+	public void testDeleteSeveral(){
+		Set<Key<UserStory>> storiesKeys = new HashSet<Key<UserStory>>();
+		storiesKeys.add(new Key<UserStory>(UserStory.class, 1l));
+		storiesKeys.add(new Key<UserStory>(UserStory.class, 2l));
+		storiesKeys.add(new Key<UserStory>(UserStory.class, 3l));
+		
+		Set<Long> storiesIds = new HashSet<Long>();
+		storiesIds.add(1l);
+		storiesIds.add(2l);
+		storiesIds.add(3l);
+		
+		userStoryDaoMock.deleteKeys(storiesKeys);
+		replay(userStoryDaoMock);
+		
+		userStoryService.delete(storiesIds);
+		
+		verify(userStoryDaoMock);
+		
+	}
+	
+	
+	
+	
 }
