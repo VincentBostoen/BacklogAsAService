@@ -1,8 +1,12 @@
 package com.baas.client.presenter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.baas.client.place.PlaceTokens;
+import com.baas.shared.DeleteUserStoriesAction;
+import com.baas.shared.DeleteUserStoriesResult;
 import com.baas.shared.GetStoryListAction;
 import com.baas.shared.GetStoryListResult;
 import com.baas.shared.core.UserStory;
@@ -13,6 +17,8 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.view.client.CellPreviewEvent;
+import com.google.gwt.view.client.MultiSelectionModel;
+import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.client.DispatchAsync;
@@ -43,6 +49,7 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 
 	private PlaceManager placeManager;
 	private DispatchAsync dispatcher;
+	private Set<UserStory> selectedStories;
 	
 	@Inject
 	public UserStoriesPresenter(EventBus eventBus, MyView view, MyProxy proxy, PlaceManager placeManager, DispatchAsync dispatcher) {
@@ -80,6 +87,16 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 	@Override
 	protected void onBind() {
 		super.onBind();
+		((MultiSelectionModel<UserStory>)getView().getSelectionModel()).clear();
+		getView().getDeleteStoryButton().setEnabled(false);
+		getView().getSelectionModel().addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			@Override
+			public void onSelectionChange(SelectionChangeEvent event) {
+				selectedStories = ((MultiSelectionModel<UserStory>)event.getSource()).getSelectedSet();
+				getView().getDeleteStoryButton().setEnabled(!selectedStories.isEmpty());
+			}
+		});
+		
 		getView().getStoriesTable().addCellPreviewHandler(new CellPreviewEvent.Handler<UserStory>() {
 			@Override
 			public void onCellPreview(CellPreviewEvent<UserStory> event) {
@@ -106,7 +123,7 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 		getView().getDeleteStoryButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				
+				deleteSelectedStories();
 			}
 		});
 	}
@@ -114,5 +131,22 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+	}
+
+	private void deleteSelectedStories() {
+		Set<Long> idsToDelete = new HashSet<Long>();
+		for (UserStory story : selectedStories) {
+			idsToDelete.add(story.getId());
+		}
+		dispatcher.execute(new DeleteUserStoriesAction(idsToDelete), new AsyncCallback<DeleteUserStoriesResult>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(DeleteUserStoriesResult result) {
+				getView().getStoriesTable().getVisibleItems().remove(selectedStories);
+			}
+		});
 	}
 }

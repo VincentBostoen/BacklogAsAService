@@ -1,6 +1,7 @@
 package com.baas.shared;
 
 import java.util.List;
+import java.util.Set;
 
 import com.baas.shared.core.UserStory;
 import com.googlecode.objectify.Key;
@@ -8,12 +9,12 @@ import com.gwtplatform.dispatch.shared.Action;
 
 public class DeleteUserStoriesAction implements Action<DeleteUserStoriesResult> {
 
-	private List<Key<UserStory>> userStoriesKeys;
+	private Set<Long> userStoriesKeys;
 
 	public DeleteUserStoriesAction() {
 	}
 	
-	public DeleteUserStoriesAction(List<Key<UserStory>> userStoriesKeys) {
+	public DeleteUserStoriesAction(Set<Long> userStoriesKeys) {
 		this.userStoriesKeys = userStoriesKeys;
 	}
 
@@ -32,7 +33,7 @@ public class DeleteUserStoriesAction implements Action<DeleteUserStoriesResult> 
 		return "DeleteUserStoriesAction[" + "]";
 	}
 	
-	public List<Key<UserStory>> getUserStoriesKeys() {
+	public Set<Long> getUserStoriesKeys() {
 		return userStoriesKeys;
 	}
 }

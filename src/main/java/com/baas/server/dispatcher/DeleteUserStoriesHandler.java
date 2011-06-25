@@ -20,8 +20,8 @@ public class DeleteUserStoriesHandler implements
 
   @Override
   public DeleteUserStoriesResult execute(final DeleteUserStoriesAction action, final ExecutionContext context) throws ActionException {
-//	  userStoryService.delete(action.getUserStoriesKeys());
-		return new DeleteUserStoriesResult();
+	  userStoryService.delete(action.getUserStoriesKeys());
+	  return new DeleteUserStoriesResult();
   }
 
   @Override
