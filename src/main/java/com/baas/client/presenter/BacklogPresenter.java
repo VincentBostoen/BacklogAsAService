@@ -3,6 +3,7 @@ package com.baas.client.presenter;
 import com.baas.client.place.PlaceTokens;
 import com.baas.client.presenter.event.backlog.BacklogDeletedEvent;
 import com.baas.client.presenter.event.backlog.BacklogDeletedHandler;
+import com.baas.client.presenter.event.backlog.BacklogSelectedEvent;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedEvent;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedHandler;
 import com.baas.shared.DeleteBacklogAction;
@@ -66,6 +67,7 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 		Long selectedBacklogId = null;
 		if(selectedBacklog != null){
 			selectedBacklogId = Long.parseLong(selectedBacklog);
+			BacklogSelectedEvent.fire(this, selectedBacklogId);
 		}
 		
 		String action = request.getParameter(PlaceTokens.ACTION_PARAM_KEY, PlaceTokens.LIST_STORIES_ACTION_PARAM_KEY);

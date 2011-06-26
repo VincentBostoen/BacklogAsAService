@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.baas.client.place.PlaceTokens;
+import com.baas.client.presenter.event.backlog.BacklogSelectedEvent;
 import com.baas.shared.DeleteUserStoriesAction;
 import com.baas.shared.DeleteUserStoriesResult;
 import com.baas.shared.GetStoryListAction;
@@ -67,6 +68,11 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		String selectedBacklog = placeManager.getCurrentPlaceHierarchy().get(0).getParameter("backlogId", null);
+		Long selectedBacklogId = null;
+		if(selectedBacklog != null){
+			selectedBacklogId = Long.parseLong(selectedBacklog);
+			BacklogSelectedEvent.fire(this, selectedBacklogId);
+		}
 		getView().setBacklog(selectedBacklog);
 		getBacklog(Long.parseLong(selectedBacklog));
 	}

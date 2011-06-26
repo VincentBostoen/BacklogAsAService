@@ -7,6 +7,8 @@ import com.baas.client.presenter.event.RevealMenuEvent;
 import com.baas.client.presenter.event.RevealMenuHandler;
 import com.baas.client.presenter.event.backlog.BacklogDeletedEvent;
 import com.baas.client.presenter.event.backlog.BacklogDeletedHandler;
+import com.baas.client.presenter.event.backlog.BacklogSelectedEvent;
+import com.baas.client.presenter.event.backlog.BacklogSelectedHandler;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedEvent;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedHandler;
 import com.baas.client.presenter.event.backlogs.BacklogsListUpdatedEvent;
@@ -38,7 +40,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 public class MenuPresenter extends
 		Presenter<MenuPresenter.MyView, MenuPresenter.MyProxy> implements
-		RevealMenuHandler, BacklogUpdatedHandler, BacklogsListUpdatedHandler, BacklogDeletedHandler {
+		RevealMenuHandler, BacklogSelectedHandler, BacklogUpdatedHandler, BacklogsListUpdatedHandler, BacklogDeletedHandler {
 
 	public interface MyView extends View {
 		void setBacklogs(List<Backlog> backlogs);
@@ -235,5 +237,21 @@ public class MenuPresenter extends
 		getView().getBacklogList().setSelectedIndex(0);
 		PlaceRequest myRequest = new PlaceRequest(PlaceTokens.HOME);
 		placeManager.revealPlace(myRequest);
+	}
+
+	@ProxyEvent
+	@Override
+	public void onBacklogSelected(BacklogSelectedEvent event) {
+		if(event.getSource() != this){
+			ListBox backlogsListBox = getView().getBacklogList();
+			int itemsCount = backlogsListBox.getItemCount();
+			for (int i = 0; i < itemsCount; i++) {
+				String value = backlogsListBox.getValue(i);
+				if((event.getBacklogId() + "").equals(value)){
+					backlogsListBox.setSelectedIndex(i);
+					break;
+				}
+			}
+		}
 	}
 }
