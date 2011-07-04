@@ -4,8 +4,8 @@
 	<ui:style>
 		.scrumBoardElement{
 			background: #fff057;
-			background: -moz-linear-gradient(top, #fffaae 0%, #fff057 100%);
-			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fffaae), color-stop(100%,#fff057));	
+			background: literal('-moz-linear-gradient(top, #fffaae 0%, #fff057 100%)');
+			background: literal('-webkit-gradient(linear, left top, left bottom, color-stop(0%,#fffaae), color-stop(100%,#fff057))');	
 			  
 			  
 			  text-decoration:none;
