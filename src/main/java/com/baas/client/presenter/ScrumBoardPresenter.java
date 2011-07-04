@@ -3,9 +3,9 @@ package com.baas.client.presenter;
 import java.util.List;
 
 import com.baas.client.place.PlaceTokens;
-import com.baas.shared.GetStoryListAction;
-import com.baas.shared.GetStoryListResult;
 import com.baas.shared.core.UserStory;
+import com.baas.shared.dispatch.GetStoriesFromBacklogAction;
+import com.baas.shared.dispatch.GetStoriesFromBacklogResult;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -48,13 +48,13 @@ public class ScrumBoardPresenter extends Presenter<ScrumBoardPresenter.MyView, S
 	}
 
 	private void getBacklog(long selectedBacklog) {
-		dispatcher.execute(new GetStoryListAction(selectedBacklog), new AsyncCallback<GetStoryListResult>() {
+		dispatcher.execute(new GetStoriesFromBacklogAction(selectedBacklog), new AsyncCallback<GetStoriesFromBacklogResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(GetStoryListResult result) {
+			public void onSuccess(GetStoriesFromBacklogResult result) {
 				getView().setStories(result.getStories());
 			}
 		});

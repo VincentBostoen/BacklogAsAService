@@ -1,9 +1,9 @@
 package com.baas.server.dispatcher;
 
 import com.baas.server.service.BacklogService;
-import com.baas.shared.GetBacklogAction;
-import com.baas.shared.GetBacklogResult;
 import com.baas.shared.core.Backlog;
+import com.baas.shared.dispatch.GetBacklogAction;
+import com.baas.shared.dispatch.GetBacklogResult;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;

@@ -1,9 +1,9 @@
 package com.baas.server.dispatcher;
 
 import com.baas.server.service.UserStoryService;
-import com.baas.shared.GetStoryAction;
-import com.baas.shared.GetStoryResult;
 import com.baas.shared.core.UserStory;
+import com.baas.shared.dispatch.GetStoryAction;
+import com.baas.shared.dispatch.GetStoryResult;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;

@@ -6,13 +6,13 @@ import com.baas.client.presenter.event.backlog.BacklogDeletedHandler;
 import com.baas.client.presenter.event.backlog.BacklogSelectedEvent;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedEvent;
 import com.baas.client.presenter.event.backlog.BacklogUpdatedHandler;
-import com.baas.shared.DeleteBacklogAction;
-import com.baas.shared.DeleteBacklogResult;
-import com.baas.shared.GetBacklogAction;
-import com.baas.shared.GetBacklogResult;
-import com.baas.shared.UpdateBacklogAction;
-import com.baas.shared.UpdateBacklogResult;
 import com.baas.shared.core.Backlog;
+import com.baas.shared.dispatch.DeleteBacklogAction;
+import com.baas.shared.dispatch.DeleteBacklogResult;
+import com.baas.shared.dispatch.GetBacklogAction;
+import com.baas.shared.dispatch.GetBacklogResult;
+import com.baas.shared.dispatch.UpdateBacklogAction;
+import com.baas.shared.dispatch.UpdateBacklogResult;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -160,7 +160,7 @@ public class BacklogPresenter extends Presenter<BacklogPresenter.MyView, Backlog
 
 			@Override
 			public void onSuccess(UpdateBacklogResult result) {
-				BacklogUpdatedEvent.fire(BacklogPresenter.this, result.getBacklog());
+				BacklogUpdatedEvent.fire(BacklogPresenter.this, result.getUpdatedBacklog());
 			}
 		});
 	}

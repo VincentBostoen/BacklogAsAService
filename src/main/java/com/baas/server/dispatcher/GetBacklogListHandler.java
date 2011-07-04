@@ -3,9 +3,9 @@ package com.baas.server.dispatcher;
 import java.util.List;
 
 import com.baas.server.service.BacklogService;
-import com.baas.shared.GetBacklogListAction;
-import com.baas.shared.GetBacklogListResult;
 import com.baas.shared.core.Backlog;
+import com.baas.shared.dispatch.GetBacklogListAction;
+import com.baas.shared.dispatch.GetBacklogListResult;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;

@@ -1,9 +1,9 @@
 package com.baas.server.dispatcher;
 
 import com.baas.server.service.UserStoryService;
-import com.baas.shared.UpdateStoryAction;
-import com.baas.shared.UpdateStoryResult;
 import com.baas.shared.core.UserStory;
+import com.baas.shared.dispatch.UpdateStoryAction;
+import com.baas.shared.dispatch.UpdateStoryResult;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;

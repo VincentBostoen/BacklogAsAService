@@ -6,17 +6,18 @@ import java.util.Set;
 
 import com.baas.client.place.PlaceTokens;
 import com.baas.client.presenter.event.backlog.BacklogSelectedEvent;
-import com.baas.shared.DeleteUserStoriesAction;
-import com.baas.shared.DeleteUserStoriesResult;
-import com.baas.shared.GetStoryListAction;
-import com.baas.shared.GetStoryListResult;
 import com.baas.shared.core.UserStory;
+import com.baas.shared.dispatch.DeleteUserStoriesAction;
+import com.baas.shared.dispatch.DeleteUserStoriesResult;
+import com.baas.shared.dispatch.GetStoriesFromBacklogAction;
+import com.baas.shared.dispatch.GetStoriesFromBacklogResult;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -78,13 +79,13 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 	}
 
 	private void getBacklog(long selectedBacklog) {
-		dispatcher.execute(new GetStoryListAction(selectedBacklog), new AsyncCallback<GetStoryListResult>() {
+		dispatcher.execute(new GetStoriesFromBacklogAction(selectedBacklog), new AsyncCallback<GetStoriesFromBacklogResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 
 			@Override
-			public void onSuccess(GetStoryListResult result) {
+			public void onSuccess(GetStoriesFromBacklogResult result) {
 				getView().setStories(result.getStories());
 			}
 		});
@@ -106,14 +107,16 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 		getView().getStoriesTable().addCellPreviewHandler(new CellPreviewEvent.Handler<UserStory>() {
 			@Override
 			public void onCellPreview(CellPreviewEvent<UserStory> event) {
-				if(event.getNativeEvent().getType().equals(ClickEvent.getType().getName()) && event.getContext().getColumn() != 0){
+				if(event.getNativeEvent().getType().equals(ClickEvent.getType().getName())){
 					UserStory selectedStory = event.getValue();
-					if (selectedStory != null) {
-						PlaceRequest myRequest = new PlaceRequest(PlaceTokens.STORY);
-						myRequest = myRequest.with("storyId", selectedStory.getId() + "");
-						myRequest = myRequest.with(PlaceTokens.ACTION_PARAM_KEY, PlaceTokens.EDIT_ACTION_PARAM_KEY);
-						placeManager.revealRelativePlace(myRequest);
-				}
+					if(event.getContext().getColumn() != 0){
+						if (selectedStory != null) {
+							PlaceRequest myRequest = new PlaceRequest(PlaceTokens.STORY);
+							myRequest = myRequest.with("storyId", selectedStory.getId() + "");
+							myRequest = myRequest.with(PlaceTokens.ACTION_PARAM_KEY, PlaceTokens.EDIT_ACTION_PARAM_KEY);
+							placeManager.revealRelativePlace(myRequest);
+						}
+					}
 			}
 		}});
 
@@ -151,7 +154,6 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 
 			@Override
 			public void onSuccess(DeleteUserStoriesResult result) {
-				getView().getStoriesTable().getVisibleItems().remove(selectedStories);
 			}
 		});
 	}

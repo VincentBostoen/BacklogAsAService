@@ -1,8 +1,8 @@
 package com.baas.server.dispatcher;
 
 import com.baas.server.service.UserStoryService;
-import com.baas.shared.DeleteUserStoriesAction;
-import com.baas.shared.DeleteUserStoriesResult;
+import com.baas.shared.dispatch.DeleteUserStoriesAction;
+import com.baas.shared.dispatch.DeleteUserStoriesResult;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;

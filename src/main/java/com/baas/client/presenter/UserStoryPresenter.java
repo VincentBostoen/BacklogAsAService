@@ -1,11 +1,11 @@
 package com.baas.client.presenter;
 
 import com.baas.client.place.PlaceTokens;
-import com.baas.shared.GetStoryAction;
-import com.baas.shared.GetStoryResult;
-import com.baas.shared.UpdateStoryAction;
-import com.baas.shared.UpdateStoryResult;
 import com.baas.shared.core.UserStory;
+import com.baas.shared.dispatch.GetStoryAction;
+import com.baas.shared.dispatch.GetStoryResult;
+import com.baas.shared.dispatch.UpdateStoryAction;
+import com.baas.shared.dispatch.UpdateStoryResult;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -119,7 +119,7 @@ public class UserStoryPresenter extends Presenter<UserStoryPresenter.MyView, Use
 			@Override
 			public void onSuccess(UpdateStoryResult result) {
 				placeManager.revealRelativePlace(-1);
-				Window.alert("La story " + result.getStory().getName() + " a été mise jour avec succès.");
+				Window.alert("La story " + result.getUpdatedStory().getName() + " a été mise jour avec succès.");
 			}
 		});
 	}

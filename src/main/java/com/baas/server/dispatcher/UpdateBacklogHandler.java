@@ -1,9 +1,9 @@
 package com.baas.server.dispatcher;
 
 import com.baas.server.service.BacklogService;
-import com.baas.shared.UpdateBacklogAction;
-import com.baas.shared.UpdateBacklogResult;
 import com.baas.shared.core.Backlog;
+import com.baas.shared.dispatch.UpdateBacklogAction;
+import com.baas.shared.dispatch.UpdateBacklogResult;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
