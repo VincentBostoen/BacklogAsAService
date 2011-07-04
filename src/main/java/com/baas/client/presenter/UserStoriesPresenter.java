@@ -154,6 +154,7 @@ public class UserStoriesPresenter extends Presenter<UserStoriesPresenter.MyView,
 
 			@Override
 			public void onSuccess(DeleteUserStoriesResult result) {
+				placeManager.revealRelativePlace(-1);
 			}
 		});
 	}
